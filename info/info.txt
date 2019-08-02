@@ -1,0 +1,31 @@
+Te envio lo solicitado :
+
+-ws de pruebas y produccion en el manual
+
+ 
+
+-credenciales para el ambiente de pruebas
+
+********************************************************
+
+USUARIO:           20505815603BIZLINKS
+
+CLAVE: TESTBIZLINKS
+
+********************************************************
+
+ 
+
+ 
+
+-credenciales para el ambiente de produccion
+
+ 
+
+------------USUARIOS ENCONTRADOS:      1-------------
+
+USUARIO:           GRUPOURB_20505815603
+
+CLAVE: Q2Q0RjmhfuIsQjy8
+
+********************************************************

@@ -1,0 +1,6 @@
+D:\Forzabi\proyectos\Bizlink\GrupoUrbano\src\facturacion.ose.envio\Billing.OSE.Dto\bin\Release\Billing.OSE.Dto.dll
+D:\Forzabi\proyectos\Bizlink\GrupoUrbano\src\facturacion.ose.envio\Billing.OSE.Dto\bin\Release\Billing.OSE.Dto.pdb
+D:\Forzabi\proyectos\Bizlink\GrupoUrbano\src\facturacion.ose.envio\Billing.OSE.Dto\obj\Release\Billing.OSE.Dto.csproj.CoreCompileInputs.cache
+D:\Forzabi\proyectos\Bizlink\GrupoUrbano\src\facturacion.ose.envio\Billing.OSE.Dto\obj\Release\Billing.OSE.Dto.dll
+D:\Forzabi\proyectos\Bizlink\GrupoUrbano\src\facturacion.ose.envio\Billing.OSE.Dto\obj\Release\Billing.OSE.Dto.pdb
+D:\Forzabi\proyectos\Bizlink\GrupoUrbano\src\facturacion.ose.envio\Billing.OSE.Dto\obj\Release\Billing.OSE.Dto.csprojAssemblyReference.cache

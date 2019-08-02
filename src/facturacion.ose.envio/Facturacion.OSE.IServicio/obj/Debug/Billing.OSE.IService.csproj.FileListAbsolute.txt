@@ -1,0 +1,9 @@
+D:\Forzabi\proyectos\Bizlink\GrupoUrbano\src\facturacion.ose.envio\Facturacion.OSE.IServicio\bin\Debug\Billing.OSE.IService.dll
+D:\Forzabi\proyectos\Bizlink\GrupoUrbano\src\facturacion.ose.envio\Facturacion.OSE.IServicio\bin\Debug\Billing.OSE.IService.pdb
+D:\Forzabi\proyectos\Bizlink\GrupoUrbano\src\facturacion.ose.envio\Facturacion.OSE.IServicio\bin\Debug\Billing.OSE.Dto.dll
+D:\Forzabi\proyectos\Bizlink\GrupoUrbano\src\facturacion.ose.envio\Facturacion.OSE.IServicio\bin\Debug\Billing.OSE.Dto.pdb
+D:\Forzabi\proyectos\Bizlink\GrupoUrbano\src\facturacion.ose.envio\Facturacion.OSE.IServicio\obj\Debug\Billing.OSE.IService.csprojAssemblyReference.cache
+D:\Forzabi\proyectos\Bizlink\GrupoUrbano\src\facturacion.ose.envio\Facturacion.OSE.IServicio\obj\Debug\Billing.OSE.IService.csproj.CoreCompileInputs.cache
+D:\Forzabi\proyectos\Bizlink\GrupoUrbano\src\facturacion.ose.envio\Facturacion.OSE.IServicio\obj\Debug\Billing.OSE.IService.csproj.CopyComplete
+D:\Forzabi\proyectos\Bizlink\GrupoUrbano\src\facturacion.ose.envio\Facturacion.OSE.IServicio\obj\Debug\Billing.OSE.IService.dll
+D:\Forzabi\proyectos\Bizlink\GrupoUrbano\src\facturacion.ose.envio\Facturacion.OSE.IServicio\obj\Debug\Billing.OSE.IService.pdb
