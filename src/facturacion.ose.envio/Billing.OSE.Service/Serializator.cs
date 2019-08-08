@@ -164,8 +164,20 @@ namespace Billing.OSE.Service
                 var customerIDNode = xmlDoc.SelectSingleNode(XMLNameSpace.nodeCustomerID,
                         xmlnsManager);
 
-                response.CustomerDocumentType = customerIDNode.Attributes["schemeID"].Value;
-                response.CustomerDocumentNumber = customerIDNode.InnerText;
+                if (customerIDNode != null)
+                {
+                    response.CustomerDocumentType = customerIDNode.Attributes["schemeID"].Value;
+                    response.CustomerDocumentNumber = customerIDNode.InnerText;
+                }
+                else
+                {
+                    response.CustomerDocumentType = xmlDoc.SelectSingleNode(XMLNameSpace.nodeAdditionalAccountID,
+                       xmlnsManager)?.InnerText;
+
+                    response.CustomerDocumentNumber = xmlDoc.SelectSingleNode(XMLNameSpace.nodeCustomerAssignedAccountID,
+                       xmlnsManager)?.InnerText;
+                }
+
                 response.CustomerName = xmlDoc.SelectSingleNode(XMLNameSpace.nodeCustomerName,
                         xmlnsManager)?.InnerText;
 

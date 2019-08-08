@@ -57,6 +57,12 @@ namespace Billing.OSE.IService
         public const string nodeCustomerID =
          "/inv:Invoice/cac:AccountingCustomerParty/cac:Party/cac:PartyIdentification/cbc:ID";
 
+        public const string nodeCustomerAssignedAccountID =
+        "/inv:Invoice/cac:AccountingCustomerParty/cbc:CustomerAssignedAccountID";
+
+        public const string nodeAdditionalAccountID =
+       "/inv:Invoice/cac:AccountingCustomerParty/cbc:AdditionalAccountID";
+
         public const string nodeNote1 =
         "/inv:Invoice/cbc:Note";
 
