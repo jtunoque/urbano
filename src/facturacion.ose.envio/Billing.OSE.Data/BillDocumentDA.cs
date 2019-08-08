@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 
 namespace Billing.OSE.Data
 {
-    public class BillDocumentDA: DataAccess
+    public class BillDocumentDA : DataAccess
     {
         public bool AddDocument(BillDocument entity)
         {
@@ -19,8 +19,8 @@ namespace Billing.OSE.Data
                 "DocumentIssueDate,ResponseCode,ResponseMessage,Status,CDRFileName,SentDate," +
                 "CustomerDocumentType, CustomerDocumentNumber, CustomerName, CustomerAddress, InvoiceNote, InvoiceCurrency, TaxAmount, TaxableAmount, TotalAmount)" +
                 " VALUES (@DocumentType,@DocumentNumber," +
-                "@DocumentIssueDate,@ResponseCode,@ResponseMessage,@Status,@CDRFileName,@SentDate,"+
-                "@CustomerDocumentType,@CustomerDocumentNumber,@CustomerName,@CustomerAddress,@InvoiceNote,@InvoiceCurrency,"+
+                "@DocumentIssueDate,@ResponseCode,@ResponseMessage,@Status,@CDRFileName,@SentDate," +
+                "@CustomerDocumentType,@CustomerDocumentNumber,@CustomerName,@CustomerAddress,@InvoiceNote,@InvoiceCurrency," +
                 "@TaxAmount,@TaxableAmount,@TotalAmount)";
 
             using (IDbConnection cn = this.DBConnection)
@@ -28,13 +28,27 @@ namespace Billing.OSE.Data
                 cn.Open();
                 var cmd = cn.CreateCommand();
                 cmd.CommandText = sql;
-                cmd.Parameters.Add(new SqlParameter("@DocumentType",entity.DocumentType));
+                cmd.CommandTimeout = 120;
+
+                cmd.Parameters.Add(new SqlParameter("@DocumentType", entity.DocumentType));
                 cmd.Parameters.Add(new SqlParameter("@DocumentNumber", entity.DocumentNumber));
                 cmd.Parameters.Add(new SqlParameter("@DocumentIssueDate", entity.DocumentIssueDate));
-                cmd.Parameters.Add(new SqlParameter("@ResponseCode", entity.ResponseCode));
-                cmd.Parameters.Add(new SqlParameter("@ResponseMessage", entity.ResponseMessage));
+
+
+                if(string.IsNullOrWhiteSpace(entity.ResponseCode))                
+                    cmd.Parameters.Add(new SqlParameter("@ResponseCode", DBNull.Value));
+                else
+                    cmd.Parameters.Add(new SqlParameter("@ResponseCode", entity.ResponseCode));
+
+                if (string.IsNullOrWhiteSpace(entity.ResponseMessage))
+                    cmd.Parameters.Add(new SqlParameter("@ResponseMessage", DBNull.Value));
+                else
+                    cmd.Parameters.Add(new SqlParameter("@ResponseMessage", entity.ResponseMessage));
+
                 cmd.Parameters.Add(new SqlParameter("@Status", entity.Status));
-                if(string.IsNullOrWhiteSpace(entity.CDRFileName))
+
+
+                if (string.IsNullOrWhiteSpace(entity.CDRFileName))
                     cmd.Parameters.Add(new SqlParameter("@CDRFileName", DBNull.Value));
                 else
                     cmd.Parameters.Add(new SqlParameter("@CDRFileName", entity.CDRFileName));
@@ -57,19 +71,19 @@ namespace Billing.OSE.Data
                 if (string.IsNullOrWhiteSpace(entity.InvoiceCurrency))
                     cmd.Parameters.Add(new SqlParameter("@InvoiceCurrency", DBNull.Value));
                 else
-                     cmd.Parameters.Add(new SqlParameter("@InvoiceCurrency", entity.InvoiceCurrency));
+                    cmd.Parameters.Add(new SqlParameter("@InvoiceCurrency", entity.InvoiceCurrency));
 
                 cmd.Parameters.Add(new SqlParameter("@TaxAmount", entity.TaxAmount));
                 cmd.Parameters.Add(new SqlParameter("@TaxableAmount", entity.TaxableAmount));
                 cmd.Parameters.Add(new SqlParameter("@TotalAmount", entity.TotalAmount));
 
-                result = cmd.ExecuteNonQuery()>0;
+                result = cmd.ExecuteNonQuery() > 0;
             }
 
             return result;
         }
 
-        public List<BillQuery> GetDocuments(DateTime sentDate1,DateTime sentDate2,int status,string documentNumber)
+        public List<BillQuery> GetDocuments(DateTime sentDate1, DateTime sentDate2, int status, string documentNumber)
         {
             documentNumber = string.IsNullOrWhiteSpace(documentNumber) ? "%" : $"%{documentNumber.Trim()}%";
 
@@ -77,7 +91,7 @@ namespace Billing.OSE.Data
             string sql = "SELECT DocumentType,DocumentNumber," +
                 "DocumentIssueDate,ResponseCode,ResponseMessage,Status,CDRFileName,SentDate " +
                 " FROM BillDocument" +
-                " WHERE (SentDate BETWEEN @sentDate1 AND @sentDate2) "+
+                " WHERE (SentDate BETWEEN @sentDate1 AND @sentDate2) " +
                 " AND (@status=0 OR Status=@status)" +
                 " AND DocumentNumber LIKE @documentNumber " +
                 " ORDER BY SentDate DESC, DocumentNumber DESC";
@@ -87,8 +101,9 @@ namespace Billing.OSE.Data
                 cn.Open();
                 var cmd = cn.CreateCommand();
                 cmd.CommandText = sql;
+                cmd.CommandTimeout = 120;
                 cmd.Parameters.Add(
-                    new SqlParameter("@sentDate1",sentDate1)
+                    new SqlParameter("@sentDate1", sentDate1)
                     );
 
                 cmd.Parameters.Add(
@@ -104,7 +119,7 @@ namespace Billing.OSE.Data
                     );
 
                 var reader = cmd.ExecuteReader();
-                while(reader.Read())
+                while (reader.Read())
                 {
                     var bill = new BillQuery();
                     bill.DocumentType = reader.GetString("DocumentType");
@@ -129,14 +144,15 @@ namespace Billing.OSE.Data
             var result = new List<BillStatus>();
             string sql = "SELECT TOP 100000 DocumentNumber,ResponseCode,Status " +
                 " FROM BillDocument" +
-                " WHERE DocumentType = @documentType"+
-                " AND (DocumentIssueDate BETWEEN GETDATE()-30 AND GETDATE()) ";
+                " WHERE DocumentType = @documentType AND ResponseCode IS NULL " +
+                " AND (DocumentIssueDate BETWEEN GETDATE()-60 AND GETDATE()) ";
 
             using (IDbConnection cn = this.DBConnection)
             {
                 cn.Open();
                 var cmd = cn.CreateCommand();
                 cmd.CommandText = sql;
+                cmd.CommandTimeout = 120;
                 cmd.Parameters.Add(
                     new SqlParameter("@documentType", documentType)
                     );

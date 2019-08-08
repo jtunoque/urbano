@@ -9,7 +9,7 @@ using Billing.OSE.IService;
 
 namespace Billing.OSE.Service
 {
-    public class Serializator 
+    public class Serializator
     {
         /// <summary>
         /// Genera el ZIP del XML basandose en la trama del XML.
@@ -58,6 +58,7 @@ namespace Billing.OSE.Service
             {
                 if (memRespuesta.Length <= 0)
                 {
+                    response.ResponseCode = null;
                     response.ResponseMessage = "Respuesta SUNAT Vacio";
                     response.Success = false;
                 }
@@ -69,7 +70,7 @@ namespace Billing.OSE.Service
                         {
                             if (!entry.Name.ToLower().EndsWith(".xml")) continue;
                             using (Stream ms = entry.Open())
-                            {  
+                            {
                                 var responseReader = new StreamReader(ms);
                                 var responseString = await responseReader.ReadToEndAsync();
                                 try
@@ -82,7 +83,7 @@ namespace Billing.OSE.Service
                                     xmlnsManager.AddNamespace("ar", XMLNameSpace.ar);
                                     xmlnsManager.AddNamespace("cac", XMLNameSpace.cac);
                                     xmlnsManager.AddNamespace("cbc", XMLNameSpace.cbc);
-                                   
+
                                     response.ResponseCode =
                                         xmlDoc.SelectSingleNode(XMLNameSpace.nodoResponseCode,
                                             xmlnsManager)?.InnerText;
@@ -103,7 +104,7 @@ namespace Billing.OSE.Service
                                         xmlDoc.SelectSingleNode(XMLNameSpace.nodoDocumentReferenceIssueTime,
                                             xmlnsManager)?.InnerText);
 
-                                    response.DocumentType = 
+                                    response.DocumentType =
                                         xmlDoc.SelectSingleNode(XMLNameSpace.nodoDocumentReferenceDocumentTypeCode,
                                             xmlnsManager)?.InnerText;
 
@@ -113,6 +114,7 @@ namespace Billing.OSE.Service
                                 }
                                 catch (Exception ex)
                                 {
+                                    response.ResponseCode = null;
                                     response.ResponseMessage = ex.Message;
                                     //response.Pila = ex.StackTrace;
                                     response.Success = false;
@@ -130,7 +132,7 @@ namespace Billing.OSE.Service
             var response = new BillDocumentSummary();
             using (var memRespuesta = new MemoryStream(documentXML))
             {
-                var responseString = await  new StreamReader(memRespuesta).ReadToEndAsync();
+                var responseString = await new StreamReader(memRespuesta).ReadToEndAsync();
 
                 var xmlDoc = new XmlDocument();
                 xmlDoc.LoadXml(responseString);
@@ -178,7 +180,7 @@ namespace Billing.OSE.Service
                    Convert.ToDouble(xmlDoc.SelectSingleNode(XMLNameSpace.nodeTaxAmount,
                        xmlnsManager)?.InnerText);
 
-                
+
 
                 var totalAmountNode = xmlDoc.SelectSingleNode(XMLNameSpace.nodePayableAmount,
                        xmlnsManager);
@@ -194,7 +196,7 @@ namespace Billing.OSE.Service
                        xmlnsManager);
 
 
-                foreach(var line in lineNodes)
+                foreach (var line in lineNodes)
                 {
 
                 }

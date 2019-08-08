@@ -68,11 +68,11 @@ namespace Billing.OSE.Service
             catch (FaultException ex)
             {
                 //log.Error("Error al generar el documento:", ex);
-                response.ResponseCode = ex.Message;
 
+                response.ResponseCode = ex.Message;
                 int errorCode = 0;
 
-                if (int.TryParse(response.ResponseCode,out errorCode) 
+                if (int.TryParse(response.ResponseCode, out errorCode)
                     && BillingConstant.SunatErrors.ContainsKey(errorCode))
                 {
                     response.ResponseMessage = BillingConstant.SunatErrors[errorCode];
@@ -93,6 +93,7 @@ namespace Billing.OSE.Service
                     msg = $"El Código de Error es {errorCode}";
                     response.ResponseCode = errorCode;
                 }
+                response.ResponseCode = null;
                 response.ResponseMessage = msg;
             }
 
